@@ -1,6 +1,10 @@
 # Revisiting Learning with Noisy Labels: Active Forgetting and Noise Suppression (Accepted by CVPR 2026)
 **Abstract:** Learning with noisy labels (LNL) has received growing attention, with most prior work following the paradigm of clean-sample reliance (e.g., sample selection). However, this reliance also imposes intrinsic limitations, as overfitting to even a few noisy samples is inevitable, creating a major bottleneck for further improvement. This limitation motivates us to go beyond mere clean-sample reliance and explore how to actively forget corrupted knowledge already internalized by models while suppressing further noise assimilation. To this end, we propose FINE, a fundamentally novel perspective for LNL that unifies active ForgettIng via machine unlearning (MU) and Noise supprEssion via negative learning (NL) within a cohesive framework. Specifically, we first reveal two key stages of noise fitting: early-stage generalized learning and later-stage noise overfitting. To actively forget early-stage noise accumulation, we introduce an MU-based module that employs a negative cross-entropy loss to erase corrupted knowledge, while an NL-based module leveraging complementary labels suppresses later-stage overfitting and mitigates reliance on noisy supervision. These modules act synergistically as plug-and-play regularizers, seamlessly integrating into existing baselines. Finally, extensive experiments on both synthetic and real-world noisy benchmarks demonstrate that our FINE consistently boosts robustness and generalization.
 
+# Pipeline
+
+![framework](Figure.png)
+
 # Installation
 ```
 pip install -r requirements.txt
@@ -31,3 +35,17 @@ Here is an example shell script to run SED on Web-aircraft :
 ```python
 python SED_FINE_web.py --warmup-epoch 5 --epoch 50 --batch-size 32 --lr 0.005  --warmup-lr 0.005  --lr-decay cosine:5,5e-4,50 --weight-decay 5e-4 --seed 123 --opt sgd --dataset web-aircraft --gpu 9 --momentum_scs 0.999 --momentum_scr 0.99 --alpha 1 --aph 0.95 --beta 0.1 --gamma 0.001 --log AIR_BEST
 ```
+
+# Results on Cifar100N and Cifar80N:
+
+![framework](Table1.png)
+
+
+# Results on Web-Aircraft, Web-Bird, and Web-Car:
+
+![framework](Table2.png)
+
+
+# Effects of different components in test accuracy (%):
+
+![framework](Table3.png)
