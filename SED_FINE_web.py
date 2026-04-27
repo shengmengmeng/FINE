@@ -16,8 +16,7 @@ from util import *
 from utils.loss import cross_entropy_MUL,label_smoothing_cross_entropy_MUL
 from utils.eval import *
 from model.SevenCNN import CNN
-from data.imbalance_cifar import *
-from data.Clothing1M import *
+from torch.utils.data import DataLoader
 from utils.ema import EMA
 from utils.SCS import SCS
 from utils.SCR import SCR
