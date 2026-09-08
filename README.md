@@ -36,6 +36,12 @@ An example shell script to run SED on CIFAR-80N :
 ```python
 python SED_FINE.py --warmup-epoch 50 --epoch 150 --batch-size 128 --lr 0.05 --warmup-lr 0.05  --noise-type symmetric --closeset-ratio 0.2 --lr-decay cosine:50,5e-4,150  --opt sgd --dataset cifar80no --gpu 4 --momentum-scs 0.999 --momentum-scr 0.95 --aph 0.99 --alpha 1.0 --beta 0.1 --gamma 0.002 
 ```
+```python
+python SED_FINE.py --warmup-epoch 50 --epoch 150 --batch-size 128 --lr 0.05 --warmup-lr 0.05  --noise-type symmetric --closeset-ratio 0.8 --lr-decay cosine:50,0,150  --opt sgd --dataset cifar80no --gpu 4 --momentum-scs 0.95 --momentum-scr 0.95 --aph 0.99 --alpha 1.0 --beta 0.1 --gamma 0.002 
+```
+```python
+python SED_FINE.py --warmup-epoch 50 --epoch 150 --batch-size 128 --lr 0.05 --warmup-lr 0.05  --noise-type asymmetric --closeset-ratio 0.4 --lr-decay cosine:50,5e-4,150  --opt sgd --dataset cifar80no --gpu 4 --momentum-scs 0.95 --momentum-scr 0.85 --aph 0.99 --alpha 1.0 --beta 0.1 --gamma 0.001 
+```
 Here is an example shell script to run SED on Web-aircraft :
 
 ```python
