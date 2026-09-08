@@ -25,6 +25,12 @@ An example shell script to run FINE on CIFAR-100N :
 ```python
 python SED_FINE.py --warmup-epoch 200 --epoch 300 --batch-size 128 --lr 0.05 --warmup-lr 0.1  --noise-type symmetric --closeset-ratio 0.2 --lr-decay cosine:200,5e-4,300  --opt sgd --dataset cifar100nc --gpu 4 --momentum-scs 0.999 --momentum-scr 0.99 --aph 0.95 --alpha 1.0 --beta 0.1 --gamma 0.002
 ```
+```python
+python SED_FINE.py --warmup-epoch 50 --epoch 120 --batch-size 128 --lr 0.05 --warmup-lr 0.05  --noise-type symmetric --closeset-ratio 0.8 --lr-decay cosine:50,5e-4,110  --opt sgd --dataset cifar100nc --gpu 4 --momentum-scs 0.95 --momentum-scr 0.99 --aph 0.99 --alpha 1.0 --beta 0.1 --gamma 0.002
+```
+```python
+python SED_FINE.py --warmup-epoch 150 --epoch 300 --batch-size 128 --lr 0.005 --warmup-lr 0.05  --noise-type symmetric --closeset-ratio 0.2 --lr-decay cosine:170,5e-5,300  --opt sgd --dataset cifar100nc --gpu 4 --momentum-scs 0.95 --momentum-scr 0.85 --aph 0.99 --alpha 1.0 --beta 0.1 --gamma 0.004
+```
 An example shell script to run SED on CIFAR-80N :
 
 ```python
