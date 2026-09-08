@@ -117,7 +117,7 @@ def conf_penalty(outputs):
     outputs = outputs.clamp(min=1e-12)
     probs = torch.softmax(outputs, dim=1)
     return torch.mean(torch.sum(probs.log() * probs, dim=1))
-def warmup(net, scs, scr, net_ema, ema, optimizer, trainloader, dev, train_loss_meter,train_accuracy_meter):
+def warmup(net, scs, scr, net_ema, ema, optimizer, trainloader, dev, train_loss_meter,train_accuracy_meter,params):
     net.train()
     pbar = tqdm(trainloader, ncols=150, ascii=' >', leave=False, desc='WARMUP TRAINING')
     for it, sample in enumerate(pbar):
@@ -129,7 +129,7 @@ def warmup(net, scs, scr, net_ema, ema, optimizer, trainloader, dev, train_loss_
             y = sample['label'].to(device)
             outputs = net(x)
             logits = outputs['logits'] if type(outputs) is dict else outputs
-            loss_ce = F.cross_entropy(logits, y, label_smoothing=0.8)
+            loss_ce = F.cross_entropy(logits, y, label_smoothing=params.label_smoothing)
             penalty = conf_penalty(logits)
             loss = loss_ce + penalty
 
@@ -208,16 +208,16 @@ def robust_train(net, scs, scr, n_samples, net_ema, ema, optimizer, trainloader,
                 l = max(l, 1 - l)
                 idx2 = torch.randperm(len(ind_in_clean))
                 loss_clean = torch.mean(
-                    F.cross_entropy(logits[ind_in_clean], y[ind_in_clean], reduction="none",label_smoothing=0.8) * l + (
+                    F.cross_entropy(logits[ind_in_clean], y[ind_in_clean], reduction="none",label_smoothing=params.label_smoothing) * l + (
                                 1 - l) * F.cross_entropy(
-                        logits[ind_in_clean][idx2], y[ind_in_clean][idx2], reduction="none",label_smoothing=0.8))
+                        logits[ind_in_clean][idx2], y[ind_in_clean][idx2], reduction="none",label_smoothing=params.label_smoothing))
             else:
-                loss_clean = F.cross_entropy(logits[ind_in_clean],y[ind_in_clean],label_smoothing=0.8)
+                loss_clean = F.cross_entropy(logits[ind_in_clean],y[ind_in_clean],label_smoothing=params.label_smoothing)
 
 
             loss = loss_clean
 
-            loss_SSL = F.cross_entropy(logits_s, pesudo, reduction="none",label_smoothing=0.8) * weight[indices]
+            loss_SSL = F.cross_entropy(logits_s, pesudo, reduction="none",label_smoothing=params.label_smoothing) * weight[indices]
             loss += loss_SSL.mean() * config.alpha
 
             one_hot_y = torch.full(size=(y.size(0), n_classes), fill_value=0)
@@ -438,7 +438,7 @@ if __name__ == '__main__':
         adjust_lr(optim, lr_plan[epoch])
         input_loader = loader_dict['trainloader']
         if epoch < config.warmup_epochs:
-            warmup(model, scs, scr, model_ema, ema, optim, input_loader, device, train_loss_meter,train_accuracy_meter)
+            warmup(model, scs, scr, model_ema, ema, optim, input_loader, device, train_loss_meter,train_accuracy_meter, config)
         else:
             robust_train(model, scs, scr, n_samples, model_ema, ema, optim, input_loader, train_loss_meter,train_accuracy_meter, n_classes, config)
 
