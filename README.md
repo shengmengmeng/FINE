@@ -45,7 +45,13 @@ python SED_FINE.py --warmup-epoch 50 --epoch 150 --batch-size 128 --lr 0.05 --wa
 Here is an example shell script to run SED on Web-aircraft :
 
 ```python
-python SED_FINE_web.py --warmup-epoch 5 --epoch 50 --batch-size 32 --lr 0.005  --warmup-lr 0.005  --lr-decay cosine:5,5e-4,50 --weight-decay 5e-4 --seed 123 --opt sgd --dataset web-aircraft --gpu 9 --momentum_scs 0.999 --momentum_scr 0.99 --alpha 1 --aph 0.95 --beta 0.1 --gamma 0.001 --log AIR_BEST
+python SED_FINE_web.py --warmup-epoch 5 --epoch 50 --batch-size 32 --lr 0.005  --warmup-lr 0.005  --lr-decay cosine:5,5e-4,50 --weight-decay 5e-4 --seed 123 --opt sgd --dataset web-aircraft --gpu 9 --momentum_scs 0.999 --momentum_scr 0.99 --alpha 1 --aph 0.95 --beta 0.1 --gamma 0.001 --label-smoothing 0.1 --log AIR_BEST
+```
+```python
+python SED_FINE_web.py --warmup-epoch 10 --epoch 70 --batch-size 32 --lr 0.005  --warmup-lr 0.005  --lr-decay cosine:10,1e-8,70 --weight-decay 5e-4 --seed 123 --opt sgd --dataset web-bird --gpu 9 --momentum_scs 0.95 --momentum_scr 0.85 --alpha 1 --aph 0.95 --beta 0.1 --gamma 0.001 --label-smoothing 0.6 --log BIRD_BEST
+```
+```python
+python SED_FINE_web.py --warmup-epoch 10 --epoch 60 --batch-size 32 --lr 0.01  --warmup-lr 0.01  --lr-decay cosine:10,1e-8,60 --weight-decay 5e-4 --seed 123 --opt sgd --dataset web-car --gpu 9 --momentum_scs 0.95 --momentum_scr 0.8 --alpha 1 --aph 0.95 --beta 0.1 --gamma 0.001 --label-smoothing 0.6 --log CAR_BEST
 ```
 
 # Results on Cifar100N and Cifar80N:
