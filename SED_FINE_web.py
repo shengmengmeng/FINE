@@ -129,7 +129,7 @@ def warmup(net, scs, scr, net_ema, ema, optimizer, trainloader, dev, train_loss_
             y = sample['label'].to(device)
             outputs = net(x)
             logits = outputs['logits'] if type(outputs) is dict else outputs
-            loss_ce = F.cross_entropy(logits, y, label_smoothing=0.6)
+            loss_ce = F.cross_entropy(logits, y, label_smoothing=0.8)
             penalty = conf_penalty(logits)
             loss = loss_ce + penalty
 
