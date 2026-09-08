@@ -371,6 +371,7 @@ def parse_args():
     parser.add_argument('--use-mixup', type=bool, default=False)
     parser.add_argument('--momentum_scs', type=float, default=0.999)
     parser.add_argument('--momentum_scr', type=float, default=0.99)
+    parser.add_argument('--label-smoothing', type=float, default=0.1)
 
     parser.add_argument('--beta', type=float, default=1.0)
     parser.add_argument('--gamma', type=float, default=1.0)
